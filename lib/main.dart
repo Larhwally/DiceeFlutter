@@ -32,6 +32,7 @@ class _DicePageState extends State<DicePage> {
   int leftDiceNumber = 1, rightDiceNumber = 1;
   AudioCache player;
 
+// A void method that doesn't takes an argument/parameter and doesn't return a result
   void _trySwitch() {
     setState(() {
       player.play('MOREDICE.wav');
@@ -40,6 +41,7 @@ class _DicePageState extends State<DicePage> {
     });
   }
 
+// Using 'super' keyword to call the constructor of a base class buh in this case we used it to call the base method
   @override
   void initState() {
     super.initState();
@@ -48,28 +50,25 @@ class _DicePageState extends State<DicePage> {
         fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
 
+  // An Expanded return type of method which returns an expanded widget with flat buttons
+  Expanded createDice(int diceNumber) {
+    return Expanded(
+      child: FlatButton(
+        onPressed: () {
+          _trySwitch();
+        },
+        child: Image.asset('assets/images/dice$diceNumber.png'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Row(
         children: <Widget>[
-          Expanded(
-            child: FlatButton(
-              onPressed: () {
-                player.play('MOREDICE.wav');
-                _trySwitch();
-              },
-              child: Image.asset('assets/images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: () {
-                _trySwitch();
-              },
-              child: Image.asset('assets/images/dice$rightDiceNumber.png'),
-            ),
-          ),
+          createDice(leftDiceNumber),
+          createDice(rightDiceNumber)
         ],
       ),
     );
